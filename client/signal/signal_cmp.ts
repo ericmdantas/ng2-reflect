@@ -1,6 +1,8 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  Output,
+  EventEmitter
 } from 'angular2/core';
 
 @Component({
@@ -12,17 +14,32 @@ import {
     `
       h1 {
         text-align: center;
-        font-size: 150px;        
+        font-size: 150px;
       }
     `
   ]
 })
 export class SignalCmp implements OnInit {
   name: string = '';
+  time: number = 0;
+  ready: boolean = false;
+
+  @Output('signalReady') signalReady: EventEmitter<number> = new EventEmitter();
 
   ngOnInit() {
-    setTimeout(() => {
+    this.reInitHandler();
+  }
+
+  reInitHandler() {
+    this.name = '...';
+    this.ready = false;
+
+    let _id = setTimeout(() => {
       this.name = 'go!'
-    }, 1234);
+      this.ready = true;
+      this.time = Date.now();
+      this.signalReady.next(this.time);
+      clearTimeout(_id);
+    }, ~~(Math.random() * 5000));
   }
 }

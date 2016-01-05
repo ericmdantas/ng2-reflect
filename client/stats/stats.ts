@@ -1,3 +1,7 @@
 export class Stats {
-  fastest: Date[] = [new Date(), new Date()];
+  fastest: number[] = [];
+
+  add(timeInit, timeEnd) {
+    this.fastest.unshift(timeEnd - timeInit);    
+  }
 }

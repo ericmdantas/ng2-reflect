@@ -1,15 +1,21 @@
 import {
-  Directive
+  Directive,
+  Output,
+  EventEmitter
 } from 'angular2/core';
 
 @Directive({
   selector: '[key-listener]',
   host: {
-    '(window:keyup)': 'alo()'
+    '(window:keyup)': 'keyPressedHandler($event)'
   }
 })
 export class KeyListenerDirective {
-  public alo() {
-    console.log('yo!');
+  @Output('keyOk') keyOk: EventEmitter<number> = new EventEmitter();
+
+  keyPressedHandler(ev: KeyboardEvent) {
+    if (ev.which === 13) {
+      this.keyOk.next(Date.now());
+    }
   }
 }

@@ -10,13 +10,16 @@ import {Stats} from './stats.js';
   template: `
     <h4>fastest reactions</h4>
     <ul>
-      <li *ngFor="#s of stats.fastest;">{{s}}</li>
+      <li *ngFor="#s of stats.fastest;">{{s}} ms</li>
     </ul>
-  `,
-  providers: [Stats]
+  `
 })
 export class StatsCmp {
   constructor(@Inject(Stats) public stats: Stats) {
 
+  }
+
+  add(timeInit: number, timeEnd: number) {
+    this.stats.add(timeInit, timeEnd);
   }
 }
